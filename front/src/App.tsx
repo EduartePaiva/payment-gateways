@@ -1,17 +1,12 @@
-import { useState } from "react";
-import { Button } from "./components/ui/button";
+import MysteryBoxProduct from "./components/mystery-box-product";
 
 function App() {
-	const [count, setCount] = useState(0);
-
 	return (
-		<Button
-			type="button"
-			variant={"default"}
-			onClick={() => setCount((count) => count + 1)}
-		>
-			count is {count}
-		</Button>
+		<main className="min-h-screen bg-gradient-to-b from-blue-100 to-white">
+			<div className="container mx-auto px-4 py-8">
+				<MysteryBoxProduct />
+			</div>
+		</main>
 	);
 }
 
