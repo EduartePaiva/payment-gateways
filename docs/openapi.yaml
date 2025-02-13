@@ -1,0 +1,62 @@
+openapi: 3.1.0
+info:
+  title: Gateway services
+  version: 1.0.0
+  description: A documented golang example of implementing various payment gateways
+  contact:
+    name: Eduarte
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Development server
+
+paths:
+  /:
+    get:
+      summary: Hello world path
+      description: Returns hello world
+      responses:
+        "200":
+          description: Hello world
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "Hello, world"
+  /docs/openapi.yaml:
+    get:
+      tags:
+        - Docs
+      summary: Documentation file
+      description: show the raw yaml file of the documentation
+      responses:
+        "200":
+          description: openapi doc
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: |
+                openapi: 3.1.0
+                info:
+                  title: Gateway services
+                  version: 1.0.0
+                  description: A documented golang example of implementing various payment gateways
+                  contact:
+                    name: Eduarte
+                servers:
+                  - url: http://localhost:3000/api/v1
+                    description: Development server
+  /docs/reference:
+    get:
+      tags:
+        - Docs
+      summary: Reference page
+      description: show a nice scalar ui for the openapi docs
+      responses:
+        "200":
+          description: gets a html page
+          content:
+            text/html:
+              schema:
+                type: "string"
+              example: "<html></html>"
