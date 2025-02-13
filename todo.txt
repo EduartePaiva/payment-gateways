@@ -1,0 +1,1 @@
+[_] - study stripe checkout https://docs.stripe.com/checkout/quickstart?lang=go&client=react
