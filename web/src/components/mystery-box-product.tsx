@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -14,6 +14,8 @@ import { BsPaypal, BsStripe } from "react-icons/bs";
 
 export default function MysteryBoxProduct() {
 	const [quantity, setQuantity] = useState(1);
+	const [email, setEmail] = useState("");
+	const formRef = useRef<HTMLFormElement>(null);
 
 	const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const value = Number.parseInt(e.target.value);
@@ -23,11 +25,13 @@ export default function MysteryBoxProduct() {
 	const handlePayment = async (
 		gateway: "stripe" | "paypal" | "mercadopago",
 	) => {
-		// This is where you'd implement the actual payment logic
+		if (formRef.current === null) return;
 		console.log(
 			`Processing payment with ${gateway} for ${quantity} mystery box(es)`,
 		);
-		// You'd typically make an API call here to your server to initiate the payment
+
+		formRef.current.action = `/api/v1/${gateway}/create-checkout-session`;
+		formRef.current.submit();
 	};
 
 	return (
@@ -48,7 +52,23 @@ export default function MysteryBoxProduct() {
 					What's inside? It could be anything! From digital goodies to discount
 					codes, each mystery box is a surprise waiting to be unveiled.
 				</p>
-				<div className="flex flex-col items-center">
+				<form
+					ref={formRef}
+					method="post"
+					className="flex flex-col items-center gap-2"
+				>
+					<div className="flex justify-between w-full gap-2 items-center">
+						<label htmlFor="email" className="font-medium shrink-0 ">
+							<span>Your Email:</span>
+						</label>
+						<Input
+							type="email"
+							id="email"
+							name="email"
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+						/>
+					</div>
 					<div className="flex justify-between w-full">
 						<label htmlFor="quantity" className="font-medium">
 							<span>Quantity:</span>
@@ -66,6 +86,7 @@ export default function MysteryBoxProduct() {
 							<Input
 								type="tel"
 								id="quantity"
+								name="quantity"
 								value={quantity}
 								onChange={handleQuantityChange}
 								min="1"
@@ -82,14 +103,15 @@ export default function MysteryBoxProduct() {
 						</div>
 					</div>
 					<p className="mt-4 text-lg font-medium">
-						Total Value ${(quantity * 0.01).toFixed(2)}
+						Total Value ${quantity.toFixed(2)}
 					</p>
-				</div>
+				</form>
 			</CardContent>
 			<CardFooter className="flex flex-col gap-2">
 				<Button
 					className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white cursor-pointer"
 					onClick={() => handlePayment("stripe")}
+					type="button"
 				>
 					Pay with Stripe{" "}
 					<BsStripe

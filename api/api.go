@@ -19,5 +19,6 @@ func CreateApp(ctx context.Context) *fiber.App {
 		return c.SendString("Hello, world!")
 	})
 	routes.DocsRouter(api)
+	routes.StripeRouter(api)
 	return app
 }

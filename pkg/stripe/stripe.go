@@ -11,12 +11,12 @@ func init() {
 	pkgStripe.Key = env.Config.StripeKey
 }
 
-func CreateCheckoutSessionURL(itemID string, quantity uint, email string) (string, error) {
+func CreateCheckoutSessionURL(priceID string, quantity uint, email string) (string, error) {
 	params := &pkgStripe.CheckoutSessionParams{
 		LineItems: []*pkgStripe.CheckoutSessionLineItemParams{
 			{
 				// Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-				Price:    pkgStripe.String("{{" + itemID + "}}"),
+				Price:    pkgStripe.String(priceID),
 				Quantity: pkgStripe.Int64(int64(quantity)),
 			},
 		},
