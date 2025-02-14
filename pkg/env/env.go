@@ -11,6 +11,8 @@ type envVariables struct {
 	GoEnv       string `env:"GO_ENV,default=production"`
 	FrontendURL string `env:"FRONTEND_URL,default="`
 	Port        string `env:"PORT,default=3000"`
+	StripeKey   string `env:"STRIPE_KEY"`
+	Domain      string `env:"DOMAIN"`
 }
 
 var (
