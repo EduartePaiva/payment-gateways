@@ -24,3 +24,4 @@ services:
     volumes:
       - ./:/app
       - /app/temp-build
+      - /app/web

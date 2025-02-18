@@ -12,3 +12,6 @@ endif
 
 air:
 	air -c $(AIR_CONFIG)
+
+up:
+	@docker compose up --build
