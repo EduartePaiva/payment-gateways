@@ -16,7 +16,7 @@ func CreateApp(ctx context.Context) *fiber.App {
 		api.Use(logger.New())
 	}
 	api.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, world!")
+		return c.SendString("Hello, world")
 	})
 	routes.DocsRouter(api)
 	routes.StripeRouter(api)
