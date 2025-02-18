@@ -37,7 +37,7 @@ export default function MysteryBoxProduct() {
 	return (
 		<Card className="w-full max-w-md mx-auto">
 			<CardHeader>
-				<CardTitle className="text-2xl">Mystery Box</CardTitle>
+				<CardTitle className="text-2xl">Mystery Box!</CardTitle>
 				<CardDescription>Unbox the unknown for just $0.01!</CardDescription>
 			</CardHeader>
 			<CardContent>
