@@ -18,3 +18,7 @@ type Database interface {
 	CreatePayment(ctx context.Context, payment Payment) error
 	MarkStatusAsPaid(SessionID string) error
 }
+
+type RedisDB interface {
+	LockSessionID(ctx context.Context, sessionID string) error
+}

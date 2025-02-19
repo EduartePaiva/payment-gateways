@@ -8,7 +8,7 @@ import (
 	"github.com/EduartePaiva/payment-gateways/types"
 )
 
-func RunServer(ctx context.Context, db types.Database) error {
-	app := api.CreateApp(ctx, db)
+func RunServer(ctx context.Context, db types.Database, redis types.RedisDB) error {
+	app := api.CreateApp(ctx, db, redis)
 	return app.Listen(":" + env.Config.Port)
 }

@@ -26,6 +26,10 @@ export default function MysteryBoxProduct() {
 		gateway: "stripe" | "paypal" | "mercadopago",
 	) => {
 		if (formRef.current === null) return;
+		if (email.length === 0) {
+			alert("Email is required");
+			return;
+		}
 		console.log(
 			`Processing payment with ${gateway} for ${quantity} mystery box(es)`,
 		);
@@ -65,6 +69,7 @@ export default function MysteryBoxProduct() {
 							type="email"
 							id="email"
 							name="email"
+							required
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 						/>
