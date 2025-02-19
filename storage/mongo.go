@@ -1,8 +1,15 @@
 package storage
 
 import (
+	"context"
+
 	"github.com/EduartePaiva/payment-gateways/types"
 	"go.mongodb.org/mongo-driver/v2/mongo"
+)
+
+const (
+	mongoDbName      = "db"
+	mongoColPayments = "payments"
 )
 
 type db struct {
@@ -16,9 +23,13 @@ func NewDatabase(client *mongo.Client) *db {
 func (d *db) GetPayment(SessionID string) (types.Payment, error) {
 	return types.Payment{}, nil
 }
-func (d *db) CreatePayment(SessionID string, UserEmail string) error {
-	return nil
+
+func (d *db) CreatePayment(ctx context.Context, payment types.Payment) error {
+	coll := d.client.Database(mongoDbName).Collection(mongoColPayments)
+	_, err := coll.InsertOne(ctx, payment)
+	return err
 }
+
 func (d *db) MarkStatusAsPaid(SessionID string) error {
 	return nil
 }
