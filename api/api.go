@@ -5,11 +5,12 @@ import (
 
 	"github.com/EduartePaiva/payment-gateways/api/routes"
 	"github.com/EduartePaiva/payment-gateways/pkg/env"
+	"github.com/EduartePaiva/payment-gateways/types"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
-func CreateApp(ctx context.Context) *fiber.App {
+func CreateApp(ctx context.Context, db types.Database) *fiber.App {
 	app := fiber.New()
 	api := app.Group("/api/v1")
 	if env.Config.GoEnv != "production" {

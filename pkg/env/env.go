@@ -15,6 +15,7 @@ type envVariables struct {
 	StripeMysteryBoxID string `env:"STRIPE_MYSTERY_BOX_ID"`
 	StripePriceID      string `env:"STRIPE_PRICE_ID"`
 	Domain             string `env:"DOMAIN"`
+	MongoURI           string `env:"MONGODB_URI"`
 }
 
 var (

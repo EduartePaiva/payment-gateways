@@ -21,7 +21,15 @@ services:
       dockerfile: server.dockerfile
     env_file:
       - .env
+    environment:
+      MONGODB_URI: mongodb://root:example@mongo:27017/
     volumes:
       - ./:/app
       - /app/temp-build
       - /app/web
+  mongo:
+    image: mongo:8
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
