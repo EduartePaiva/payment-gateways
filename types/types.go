@@ -5,10 +5,12 @@ import "context"
 type Payment struct {
 	SessionID string `bson:"_id"`
 	UserEmail string `bson:"user_email"`
-	Status    string `bson:"status"`
-	Item      string `bson:"item"`
-	Price     uint   `bson:"price"`
-	Quantity  uint   `bson:"quantity"`
+	// "can be 'paid' or 'unpaid'"
+	Status string `bson:"status"`
+	Item   string `bson:"item"`
+	// Price is measured in cents
+	Price    uint `bson:"price"`
+	Quantity uint `bson:"quantity"`
 }
 
 type Database interface {

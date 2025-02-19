@@ -13,7 +13,7 @@ func init() {
 	pkgStripe.Key = env.Config.StripeKey
 }
 
-func CreateCheckoutSessionURL(priceID string, quantity uint, email string) (string, error) {
+func CreateCheckoutSessionURL(priceID string, quantity uint, email string) (*pkgStripe.CheckoutSession, error) {
 	params := &pkgStripe.CheckoutSessionParams{
 		LineItems: []*pkgStripe.CheckoutSessionLineItemParams{
 			{
@@ -27,9 +27,7 @@ func CreateCheckoutSessionURL(priceID string, quantity uint, email string) (stri
 		CancelURL:     pkgStripe.String(env.Config.Domain + "?canceled=true"),
 		CustomerEmail: pkgStripe.String(email),
 	}
-
-	s, err := session.New(params)
-	return s.URL, err
+	return session.New(params)
 }
 
 func FulfillCheckout(sessionId string) {

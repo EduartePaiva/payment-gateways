@@ -27,6 +27,8 @@ services:
       - ./:/app
       - /app/temp-build
       - /app/web
+    depends_on:
+      - mongo
   mongo:
     image: mongo:8
     restart: always

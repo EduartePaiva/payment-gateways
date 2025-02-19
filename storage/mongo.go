@@ -25,6 +25,8 @@ func (d *db) GetPayment(SessionID string) (types.Payment, error) {
 }
 
 func (d *db) CreatePayment(ctx context.Context, payment types.Payment) error {
+	// ensures that the status is unpaid when creating a payment
+	payment.Status = "unpaid"
 	coll := d.client.Database(mongoDbName).Collection(mongoColPayments)
 	_, err := coll.InsertOne(ctx, payment)
 	return err

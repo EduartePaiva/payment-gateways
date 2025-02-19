@@ -20,6 +20,6 @@ func CreateApp(ctx context.Context, db types.Database) *fiber.App {
 		return c.SendString("Hello, world")
 	})
 	routes.DocsRouter(api)
-	routes.StripeRouter(api)
+	routes.StripeRouter(api, db)
 	return app
 }
