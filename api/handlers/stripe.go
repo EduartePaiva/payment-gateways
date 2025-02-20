@@ -44,3 +44,24 @@ func CreateCheckoutStripe(db types.Database) fiber.Handler {
 		return c.Redirect(session.URL)
 	}
 }
+
+// This handler finalizes the payment
+func StripeWebhook(db types.Database, redis types.RedisDB) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		// guessing it's this way
+		sessionID := c.Params("session_id")
+		if sessionID == "" {
+			return c.SendStatus(http.StatusBadRequest)
+		}
+
+		ok, err := redis.LockSessionID(c.Context(), sessionID)
+		if err != nil {
+			return c.SendStatus(http.StatusInternalServerError)
+		}
+		if !ok {
+			// what status should I return when some other function is already handling this payment session?
+		}
+
+		return nil
+	}
+}
