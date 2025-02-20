@@ -23,12 +23,14 @@ services:
       - .env
     environment:
       MONGODB_URI: mongodb://root:example@mongo:27017/
+      REDIS_URI: redis://redis:6379/0
     volumes:
       - ./:/app
       - /app/temp-build
       - /app/web
     depends_on:
       - mongo
+      - redis
   mongo:
     image: mongo:8
     restart: always
@@ -48,3 +50,5 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
       ME_CONFIG_BASICAUTH: false
+  redis:
+    image: redis:alpine

@@ -16,6 +16,7 @@ type envVariables struct {
 	StripePriceID      string `env:"STRIPE_PRICE_ID"`
 	Domain             string `env:"DOMAIN"`
 	MongoURI           string `env:"MONGODB_URI"`
+	RedisURI           string `env:"REDIS_URI"`
 }
 
 var (

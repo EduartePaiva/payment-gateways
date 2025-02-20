@@ -30,7 +30,7 @@ func main() {
 	db := storage.NewDatabase(mongoClient)
 
 	// create redis client
-	opt, err := redis.ParseURL("redis://<user>:<pass>@localhost:6379/<db>")
+	opt, err := redis.ParseURL(env.Config.RedisURI)
 	if err != nil {
 		panic(err)
 	}
