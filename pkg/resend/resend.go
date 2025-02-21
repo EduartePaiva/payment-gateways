@@ -1,6 +1,7 @@
 package resend
 
 import (
+	"bytes"
 	"context"
 
 	"github.com/EduartePaiva/payment-gateways/pkg/env"
@@ -14,14 +15,13 @@ func init() {
 }
 
 func SendEmail(ctx context.Context, email string) (*rsd.SendEmailResponse, error) {
+	buff := new(bytes.Buffer)
+	GenerateEmail().Render(ctx, buff)
 
 	return client.Emails.SendWithContext(ctx, &rsd.SendEmailRequest{
-		From:    "Acme <onboarding@resend.dev>",
-		To:      []string{"delivered@resend.dev"},
-		Html:    "<strong>hello world</strong>",
-		Subject: "Hello from Golang",
-		Cc:      []string{"cc@example.com"},
-		Bcc:     []string{"bcc@example.com"},
-		ReplyTo: "replyto@example.com",
+		From:    "Payment Gateway <payment@eduarte.pro>",
+		To:      []string{email},
+		Html:    buff.String(),
+		Subject: "Mystery Box Delivery",
 	})
 }

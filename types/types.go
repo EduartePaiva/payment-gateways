@@ -14,9 +14,9 @@ type Payment struct {
 }
 
 type Database interface {
-	GetPayment(SessionID string) (Payment, error)
+	GetPayment(ctx context.Context, SessionID string) (Payment, error)
 	CreatePayment(ctx context.Context, payment Payment) error
-	MarkStatusAsPaid(SessionID string) error
+	MarkStatusAsPaid(ctx context.Context, SessionID string) error
 }
 
 type RedisDB interface {
