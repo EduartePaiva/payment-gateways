@@ -21,4 +21,5 @@ type Database interface {
 
 type RedisDB interface {
 	LockSessionID(ctx context.Context, sessionID string) (bool, error)
+	DelSessionID(ctx context.Context, sessionID string) error
 }

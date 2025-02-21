@@ -8,6 +8,7 @@ import (
 	"github.com/EduartePaiva/payment-gateways/types"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/resend/resend-go/v2"
 )
 
 func CreateApp(ctx context.Context, db types.Database, redis types.RedisDB) *fiber.App {
@@ -19,7 +20,9 @@ func CreateApp(ctx context.Context, db types.Database, redis types.RedisDB) *fib
 	api.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hello, world")
 	})
+	resendClient := resend.NewClient(env.Config.ResendKey)
+
 	routes.DocsRouter(api)
-	routes.StripeRouter(api, db)
+	routes.StripeRouter(api, db, resendClient)
 	return app
 }

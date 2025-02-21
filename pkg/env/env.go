@@ -17,6 +17,7 @@ type envVariables struct {
 	Domain             string `env:"DOMAIN"`
 	MongoURI           string `env:"MONGODB_URI"`
 	RedisURI           string `env:"REDIS_URI"`
+	ResendKey          string `env:"RESEND_KEY"`
 }
 
 var (
