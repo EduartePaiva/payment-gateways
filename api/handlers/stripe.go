@@ -86,16 +86,16 @@ func fulfillCheckout(ctx context.Context, redis types.RedisDB, db types.Database
 	}
 
 	// send email to the user
-	// TODO: make a nice email template
-	resp, err := email.Emails.SendWithContext(ctx, &resend.SendEmailRequest{
-		From:    "Acme <onboarding@resend.dev>",
-		To:      []string{"delivered@resend.dev"},
-		Html:    "<strong>hello world</strong>",
-		Subject: "Hello from Golang",
-		Cc:      []string{"cc@example.com"},
-		Bcc:     []string{"bcc@example.com"},
-		ReplyTo: "replyto@example.com",
-	})
+	// // TODO: make a nice email template
+	// resp, err := email.Emails.SendWithContext(ctx, &resend.SendEmailRequest{
+	// 	From:    "Acme <onboarding@resend.dev>",
+	// 	To:      []string{"delivered@resend.dev"},
+	// 	Html:    "<strong>hello world</strong>",
+	// 	Subject: "Hello from Golang",
+	// 	Cc:      []string{"cc@example.com"},
+	// 	Bcc:     []string{"bcc@example.com"},
+	// 	ReplyTo: "replyto@example.com",
+	// })
 
 	return http.StatusOK
 }

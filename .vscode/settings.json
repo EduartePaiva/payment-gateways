@@ -17,5 +17,5 @@
 		"cSpell.fixSpellingWithRenameProvider": false,
 		"editor.defaultFormatter": "biomejs.biome"
 	},
-	"cSpell.words": ["bson"]
+	"cSpell.words": ["bson", "templ"]
 }
