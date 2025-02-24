@@ -52,13 +52,9 @@ func CreateCheckoutStripe(db types.Database) fiber.Handler {
 // This handler finalizes the payment
 func StripeWebhook(db types.Database, redis types.RedisDB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		// guessing it's this way
-		sessionID := c.Params("session_id")
-		if sessionID == "" {
-			return c.SendStatus(http.StatusBadRequest)
-		}
-
-		return c.SendStatus(fulfillCheckout(c.Context(), redis, db, sessionID))
+		return stripe.ValidateWebhookAndFullfilCheckout(c, func(sessionID string) int {
+			return fulfillCheckout(c.Context(), redis, db, sessionID)
+		})
 	}
 }
 
@@ -88,6 +84,7 @@ func fulfillCheckout(ctx context.Context, redis types.RedisDB, db types.Database
 	// send email to the user
 	_, err = resend.SendEmail(ctx, payment.UserEmail)
 	if err != nil {
+		log.Println(err)
 		log.Println("Failed to send email to the user")
 		return http.StatusServiceUnavailable
 	}

@@ -1,9 +1,16 @@
 package stripe
 
 import (
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"os"
+
 	"github.com/EduartePaiva/payment-gateways/pkg/env"
+	"github.com/gofiber/fiber/v2"
 	pkgStripe "github.com/stripe/stripe-go/v81"
 	"github.com/stripe/stripe-go/v81/checkout/session"
+	"github.com/stripe/stripe-go/v81/webhook"
 )
 
 // initialize the stripe key
@@ -33,4 +40,29 @@ func CheckPaymentIsPaid(sessionID string) bool {
 	params.AddExpand("line_items")
 	cs, _ := session.Get(sessionID, params)
 	return cs.PaymentStatus == pkgStripe.CheckoutSessionPaymentStatusPaid
+}
+
+func ValidateWebhookAndFullfilCheckout(c *fiber.Ctx, fullfilCheckout func(SessionID string) int) error {
+	// Pass the request body and Stripe-Signature header to ConstructEvent, along with the webhook signing key
+	// Use the secret provided by Stripe CLI for local testing
+	// or your webhook endpoint's secret.
+	event, err := webhook.ConstructEvent(c.Body(), c.Get("Stripe-Signature"), env.Config.StripeEndpointSecret)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error verifying webhook signature: %v\n", err)
+		return c.SendStatus(http.StatusBadRequest) // Return a 400 error on a bad signature
+	}
+
+	if event.Type == pkgStripe.EventTypeCheckoutSessionCompleted ||
+		event.Type == pkgStripe.EventTypeCheckoutSessionAsyncPaymentSucceeded {
+		var cs pkgStripe.CheckoutSession
+		err := json.Unmarshal(event.Data.Raw, &cs)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error parsing webhook JSON: %v\n", err)
+			return c.SendStatus(http.StatusBadRequest) // Return a 400 error on a bad signature
+		}
+
+		return c.SendStatus(fullfilCheckout(cs.ID))
+
+	}
+	return c.SendStatus(http.StatusOK)
 }

@@ -33,7 +33,6 @@ services:
       - redis
   mongo:
     image: mongo:8
-    restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
@@ -42,7 +41,6 @@ services:
       - server
       - mongo
     image: mongo-express:1.0.2-20-alpine3.19
-    restart: always
     ports:
       - 8081:8081
     environment:

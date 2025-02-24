@@ -23,6 +23,6 @@ func CreateApp(ctx context.Context, db types.Database, redis types.RedisDB) *fib
 	resendClient := resend.NewClient(env.Config.ResendKey)
 
 	routes.DocsRouter(api)
-	routes.StripeRouter(api, db, resendClient)
+	routes.StripeRouter(api, db, redis, resendClient)
 	return app
 }

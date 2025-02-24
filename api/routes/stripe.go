@@ -7,7 +7,8 @@ import (
 	"github.com/resend/resend-go/v2"
 )
 
-func StripeRouter(api fiber.Router, db types.Database, email *resend.Client) {
+func StripeRouter(api fiber.Router, db types.Database, redis types.RedisDB, email *resend.Client) {
 	apiG := api.Group("/stripe")
 	apiG.Post("/create-checkout-session", handlers.CreateCheckoutStripe(db))
+	apiG.Post("/webhook", handlers.StripeWebhook(db, redis))
 }
