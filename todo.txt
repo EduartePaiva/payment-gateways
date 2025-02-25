@@ -1,5 +1,6 @@
-[_] - study stripe checkout https://docs.stripe.com/checkout/quickstart?lang=go&client=react
-[_] - make the confirmation by sending a email to the user
-[_] - test if the redis lock is working properly
+[x] - study stripe checkout https://docs.stripe.com/checkout/quickstart?lang=go&client=react
+[x] - make the confirmation by sending a email to the user
+[x] - test if the redis lock is working properly
 
-[_]
+[_] - start learning paypal way https://developer.paypal.com/api/rest/
+[_] - golang library for paypal client https://github.com/paypal/paypal-rest-api-specifications
