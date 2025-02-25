@@ -60,10 +60,13 @@ func StripeWebhook(db types.Database, redis types.RedisDB) fiber.Handler {
 
 func fulfillCheckout(ctx context.Context, redis types.RedisDB, db types.Database, sessionID string) int {
 	// redis lock logic
+	log.Println(sessionID)
 	ok, err := redis.LockSessionID(ctx, sessionID)
 	if err != nil {
 		return http.StatusInternalServerError
 	}
+	log.Println("ok: ", ok)
+	log.Println("err: ", err)
 	if !ok {
 		return http.StatusServiceUnavailable
 	}

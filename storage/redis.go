@@ -19,11 +19,6 @@ func (d *redisLocker) LockSessionID(ctx context.Context, sessionID string) (bool
 	return d.redis.SetNX(ctx, sessionID, "processing", time.Second*30).Result()
 }
 
-func (d *redisLocker) UnlockSessionID(ctx context.Context, sessionID string) error {
-	_, err := d.redis.Del(ctx, sessionID).Result()
-	return err
-}
-
 func (d *redisLocker) DelSessionID(ctx context.Context, sessionID string) error {
 	_, err := d.redis.Del(ctx, sessionID).Result()
 	return err

@@ -50,3 +50,5 @@ services:
       ME_CONFIG_BASICAUTH: false
   redis:
     image: redis:alpine
+    ports:
+      - 6379:6379

@@ -64,5 +64,5 @@ func ValidateWebhookAndFullfilCheckout(c *fiber.Ctx, fullfilCheckout func(Sessio
 		return c.SendStatus(fullfilCheckout(cs.ID))
 
 	}
-	return c.SendStatus(http.StatusOK)
+	return c.SendStatus(http.StatusAccepted)
 }
