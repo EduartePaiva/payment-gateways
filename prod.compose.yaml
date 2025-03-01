@@ -1,0 +1,31 @@
+services:
+  proxy:
+    build:
+      context: ./web
+      dockerfile: prod.dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - server
+  server:
+    build:
+      context: .
+      dockerfile: prod.server.dockerfile
+    env_file:
+      - .env
+    environment:
+      MONGODB_URI: mongodb://root:example@mongo:27017/
+      REDIS_URI: redis://redis:6379/0
+      GO_ENV: "production"
+    depends_on:
+      - mongo
+      - redis
+  mongo:
+    image: mongo:8
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379

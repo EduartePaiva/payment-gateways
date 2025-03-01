@@ -13,7 +13,7 @@ type goEnv string
 func (i *goEnv) Decode(repl string) error {
 	switch repl {
 	case "development":
-	case "Production":
+	case "production":
 	default:
 		return fmt.Errorf("error decoding the value of: %s for GO_ENV", repl)
 	}
@@ -27,9 +27,9 @@ type envVariables struct {
 	GoEnv                goEnv  `env:"GO_ENV,default=production"`
 	FrontendURL          string `env:"FRONTEND_URL,default="`
 	Port                 string `env:"PORT,default=3000"`
-	StripeKey            string `env:"STRIPE_KEY"`
-	StripeMysteryBoxID   string `env:"STRIPE_MYSTERY_BOX_ID"`
-	StripePriceID        string `env:"STRIPE_PRICE_ID"`
+	StripeKey            string `env:"STRIPE_KEY,required"`
+	StripeMysteryBoxID   string `env:"STRIPE_MYSTERY_BOX_ID,required"`
+	StripePriceID        string `env:"STRIPE_PRICE_ID,required"`
 	StripeEndpointSecret string `env:"STRIPE_ENDPOINT_SECRET"`
 	Domain               string `env:"DOMAIN"`
 	MongoURI             string `env:"MONGODB_URI,required"`

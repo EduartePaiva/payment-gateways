@@ -25,7 +25,7 @@ func init() {
 	client = newClient
 }
 
-func CreateOrder(ctx context.Context, quantity uint64) {
+func CreateOrder(ctx context.Context, quantity uint64) (*sdk.Order, error) {
 	units := []sdk.PurchaseUnitRequest{
 		sdk.PurchaseUnitRequest{
 			Amount: &sdk.PurchaseUnitAmount{
@@ -52,6 +52,5 @@ func CreateOrder(ctx context.Context, quantity uint64) {
 	}
 	source := &sdk.PaymentSource{}
 	appCtx := &sdk.ApplicationContext{}
-	order, err := client.CreateOrder(ctx, sdk.OrderIntentCapture, units, source, appCtx)
-
+	return client.CreateOrder(ctx, sdk.OrderIntentCapture, units, source, appCtx)
 }
